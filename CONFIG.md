@@ -1,6 +1,7 @@
 # Config
 
 Adding another revanced app is as easy as this:
+
 ```toml
 [Some-App]
 apkmirror-dlurl = "https://www.apkmirror.com/apk/inc/app"
@@ -9,13 +10,14 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/inc/app"
 
 ## More about other options:
 
-There exists an example below with all defaults shown and all the keys explicitly set.  
-**All keys are optional** (except download urls) and are assigned to their default values if not set explicitly.  
+There exists an example below with all defaults shown and all the keys explicitly set.
+**All keys are optional** (except download urls) and are assigned to their default values if not set explicitly.
 
 ```toml
 parallel-jobs = 1                    # amount of cores to use for parallel patching, if not set $(nproc) is used
 compression-level = 9                # module zip compression level
 remove-rv-integrations-checks = true # remove checks from the revanced integrations
+rebuild-all-on-update = false        # if true, rebuild all apps when any update is available instead of selective updates. default: false
 
 patches-source = "revanced/revanced-patches" # where to fetch patches bundle from. default: "revanced/revanced-patches"
 cli-source = "j-hc/revanced-cli"             # where to fetch cli from. default: "j-hc/revanced-cli"

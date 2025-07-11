@@ -1,5 +1,6 @@
 enable-magisk-update = true # set this to false if you do not want to receive updates for the module in magisk app
 parallel-jobs = 1
+rebuild-all-on-update = false # set this to true to rebuild all apps when any update is available instead of selective updates
 
 # add 'enabled = false' for not patching a specific app or remove it from the config
 # see https://github.com/avisek/revanced-apps/blob/main/CONFIG.md for more detailed explanations

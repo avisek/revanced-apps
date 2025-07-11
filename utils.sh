@@ -170,12 +170,18 @@ config_update() {
 		fi
 	done
 	if [ "$prcfg" = true ]; then
-		local query=""
-		for table in "${upped[@]}"; do
-			if [ -n "$query" ]; then query+=" or "; fi
-			query+=".key == \"$table\""
-		done
-		jq "to_entries | map(select(${query} or (.value | type != \"object\"))) | from_entries" <<<"$__TOML__"
+		if [ "${REBUILD_ALL_ON_UPDATE:-false}" = "true" ]; then
+			# Output full config when rebuild-all-on-update is enabled
+			echo "$__TOML__"
+		else
+			# Output filtered config
+			local query=""
+			for table in "${upped[@]}"; do
+				if [ -n "$query" ]; then query+=" or "; fi
+				query+=".key == \"$table\""
+			done
+			jq "to_entries | map(select(${query} or (.value | type != \"object\"))) | from_entries" <<<"$__TOML__"
+		fi
 	fi
 }
 
