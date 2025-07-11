@@ -12,7 +12,7 @@
 
 [![CI](https://github.com/avisek/revanced-apps/actions/workflows/ci.yml/badge.svg?event=schedule)](https://github.com/avisek/revanced-apps/actions/workflows/ci.yml)
 
-[![Download Latest Release](https://img.shields.io/badge/📥%20Download%20Latest%20Release-blue?style=for-the-badge&labelColor=blue)](https://github.com/avisek/revanced-apps/releases)
+[![Download Latest Release](https://img.shields.io/badge/Download%20Latest%20Release-blue?style=for-the-badge&logo=abdownloadmanager&logoColor=white)](https://github.com/avisek/revanced-apps/releases)
 
 <br/>
 
