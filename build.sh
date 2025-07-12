@@ -172,12 +172,12 @@ if [ -z "$(ls -A1 "${BUILD_DIR}")" ]; then abort "All builds failed."; fi
 # Generate download table
 generate_download_table
 
-log "\n## Notes"
-log "\n**Non-root users**: Install [MicroG](https://github.com/ReVanced/GmsCore/releases) to use non-root versions of YouTube, YouTube Music, and Google Photos."
-log "**Root users**: Use [zygisk-detach](https://github.com/j-hc/zygisk-detach) to block Play Store from auto-updating YouTube, YouTube Music, and Google Photos."
-log "\n[Main Repo](https://github.com/avisek/revanced-apps)"
+log "\n## 📌 Notes\n"
+log "**Non-root users**: Install [MicroG](https://github.com/ReVanced/GmsCore/releases) to use non-root versions of YouTube, YouTube Music, and Google Photos.\n"
+log "**Root users**: Use [zygisk-detach](https://github.com/j-hc/zygisk-detach) to block Play Store from auto-updating YouTube, YouTube Music, and Google Photos.\n"
+log "[Main Repo](https://github.com/avisek/revanced-apps)"
 
-log "\n## Changelog"
+log "\n## 🗒️ Changelog\n"
 log "$(cat "$TEMP_DIR"/*-rv/changelog.md)"
 
 SKIPPED=$(cat "$TEMP_DIR"/skipped 2>/dev/null || :)

@@ -225,65 +225,83 @@ generate_download_table() {
 	fi
 	
 	# Initialize table
-	log "## Downloads\n"
-	log "| App | APK (Non-Root) | Magisk Module (Root) |"
-	log "|-----|----------------|----------------------|"
+	log "## 📥 Downloads\n"
+	log "| App  | APK<br/><sup>Non-Root</sup> | Module<br/><sup>Root</sup> |"
+	log "| :--- | :-------------------------- | :------------------------- |"
 	
 	local base_url=""
 	if [ -n "${GITHUB_REPOSITORY-}" ] && [ -n "${NEXT_VER_CODE-}" ]; then
 		base_url="https://github.com/${GITHUB_REPOSITORY}/releases/download/${NEXT_VER_CODE}"
 	fi
 	
-	# Create a temporary file to store processed data
+	# Create a temporary file to store processed data organized by config order
 	local temp_table="${TEMP_DIR}/table_data.txt"
 	: > "$temp_table"
 	
-	# Process each build file
-	while IFS='|' read -r table version app_name rv_brand build_type arch filename; do
-		# Create app key for grouping
-		local app_key="${app_name} ${rv_brand}"
-		
-		# Build download link
-		local link_text
-		local download_url="${base_url}/${filename}"
-		
-		if [ "$build_type" = "apk" ]; then
-			if [ "$arch" = "all" ]; then
-				link_text="APK"
-			else
-				link_text="APK (${arch})"
-			fi
-		else
-			if [ "$arch" = "all" ]; then
-				link_text="Module"
-			else
-				link_text="Module (${arch})"
-			fi
+	# Get config order from toml
+	local config_order=()
+	for table_name in $(toml_get_table_names); do
+		if [ -n "$table_name" ]; then
+			config_order+=("$table_name")
 		fi
-		
-		local download_link="[${link_text}](${download_url})"
-		echo "${app_key}|${version}|${build_type}|${download_link}" >> "$temp_table"
-	done < <(sort "${TEMP_DIR}/build_files.txt")
+	done
+	
+	# Process builds in config order
+	for table_name in "${config_order[@]}"; do
+		while IFS='|' read -r table version app_name rv_brand build_type arch filename; do
+			if [ "$table" = "$table_name" ]; then
+				# Create app display name
+				local app_display_name="$app_name"
+				
+				# Add extended badge for ReVanced Extended
+				local version_badge="\`${version}\`"
+				if [ "$rv_brand" = "ReVanced Extended" ]; then
+					version_badge="${version_badge} \`extended\`"
+				fi
+				
+				# Build download link
+				local link_text
+				local download_url="${base_url}/${filename}"
+				local arch_display="$arch"
+				
+				# Map "all" to "universal"
+				if [ "$arch" = "all" ]; then
+					arch_display="universal"
+				fi
+				
+				if [ "$build_type" = "apk" ]; then
+					link_text="**APK**<br/><sup>${arch_display}</sup>"
+				else
+					link_text="**Module**<br/><sup>${arch_display}</sup>"
+				fi
+				
+				local download_link="[${link_text}](${download_url})"
+				echo "${table_name}|${version_badge}|${app_display_name}|${build_type}|${download_link}" >> "$temp_table"
+			fi
+		done < "${TEMP_DIR}/build_files.txt"
+	done
 	
 	# Group by app and version
-	local current_app=""
-	local current_version=""
+	local current_table=""
+	local current_version_badge=""
+	local current_app_name=""
 	local apk_links=""
 	local module_links=""
 	
-	while IFS='|' read -r app_key version build_type download_link; do
-		if [ "$app_key" != "$current_app" ] || [ "$version" != "$current_version" ]; then
+	while IFS='|' read -r table_name version_badge app_display_name build_type download_link; do
+		if [ "$table_name" != "$current_table" ] || [ "$version_badge" != "$current_version_badge" ]; then
 			# Output previous row if we have one
-			if [ -n "$current_app" ]; then
+			if [ -n "$current_table" ]; then
 				local apk_cell="${apk_links:-"-"}"
 				local module_cell="${module_links:-"-"}"
-				local app_cell="**${current_app}**<br/><sup>${current_version}</sup>"
+				local app_cell="**${current_app_name}**<br/><sup>${current_version_badge}</sup>"
 				log "| ${app_cell} | ${apk_cell} | ${module_cell} |"
 			fi
 			
 			# Reset for new app/version
-			current_app="$app_key"
-			current_version="$version"
+			current_table="$table_name"
+			current_version_badge="$version_badge"
+			current_app_name="$app_display_name"
 			apk_links=""
 			module_links=""
 		fi
@@ -305,10 +323,10 @@ generate_download_table() {
 	done < "$temp_table"
 	
 	# Output final row
-	if [ -n "$current_app" ]; then
+	if [ -n "$current_table" ]; then
 		local apk_cell="${apk_links:-"-"}"
 		local module_cell="${module_links:-"-"}"
-		local app_cell="**${current_app}**<br/><sup>${current_version}</sup>"
+		local app_cell="**${current_app_name}**<br/><sup>${current_version_badge}</sup>"
 		log "| ${app_cell} | ${apk_cell} | ${module_cell} |"
 	fi
 	
