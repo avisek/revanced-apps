@@ -226,8 +226,8 @@ generate_download_table() {
 	
 	# Initialize table
 	log "## 📥 Downloads\n"
-	log "| App  | APK<br/><sup>Non-Root</sup> | Module<br/><sup>Root</sup> |"
-	log "| :--- | :-------------------------- | :------------------------- |"
+	log "| App                                                   | APK<br/><sup>Non-Root</sup>                                                                                                                                                                                                                                                                                   | Module<br/><sup>Root</sup>                                                                                                                                                                                                                                                                                                        |"
+	log "| :---------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |"
 	
 	local base_url=""
 	if [ -n "${GITHUB_REPOSITORY-}" ] && [ -n "${NEXT_VER_CODE-}" ]; then
@@ -245,6 +245,10 @@ generate_download_table() {
 			config_order+=("$table_name")
 		fi
 	done
+	
+	# Read build files once into memory
+	local build_data
+	build_data=$(cat "${TEMP_DIR}/build_files.txt")
 	
 	# Process builds in config order
 	for table_name in "${config_order[@]}"; do
@@ -278,7 +282,7 @@ generate_download_table() {
 				local download_link="[${link_text}](${download_url})"
 				echo "${table_name}|${version_badge}|${app_display_name}|${build_type}|${download_link}" >> "$temp_table"
 			fi
-		done < "${TEMP_DIR}/build_files.txt"
+		done <<<"$build_data"
 	done
 	
 	# Group by app and version
