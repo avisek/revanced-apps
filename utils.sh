@@ -585,6 +585,7 @@ build_rv() {
 	local app_name=${args[app_name]}
 	local app_name_l=${app_name,,}
 	app_name_l=${app_name_l// /-}
+	local table_name=${args[table_name]}
 	local table=${args[table]}
 	local dl_from=${args[dl_from]}
 	local arch=${args[arch]}
@@ -716,7 +717,7 @@ build_rv() {
 			mv -f "$patched_apk" "$apk_output"
 			pr "Built ${table} (non-root): '${apk_output}'"
 			# Store APK build info
-			echo "${table}|${version}|${app_name}|${args[rv_brand]}|apk|${arch}|$(basename "$apk_output")" >> "${TEMP_DIR}/build_files.txt"
+			echo "${table_name}|${version}|${app_name}|${args[rv_brand]}|apk|${arch}|$(basename "$apk_output")" >> "${TEMP_DIR}/build_files.txt"
 			continue
 		fi
 		local base_template
@@ -744,7 +745,7 @@ build_rv() {
 		popd >/dev/null || :
 		pr "Built ${table} (root): '${BUILD_DIR}/${module_output}'"
 		# Store Module build info
-		echo "${table}|${version}|${app_name}|${args[rv_brand]}|module|${arch}|${module_output}" >> "${TEMP_DIR}/build_files.txt"
+		echo "${table_name}|${version}|${app_name}|${args[rv_brand]}|module|${arch}|${module_output}" >> "${TEMP_DIR}/build_files.txt"
 	done
 }
 
