@@ -12,6 +12,7 @@ OS=$(uname -o)
 
 toml_prep() {
 	if [ ! -f "$1" ]; then return 1; fi
+	__TOML_FILE__="$1"
 	if [ "${1##*.}" == toml ]; then
 		__TOML__=$($TOML --output json --file "$1" .)
 	elif [ "${1##*.}" == json ]; then
@@ -19,6 +20,10 @@ toml_prep() {
 	else abort "config extension not supported"; fi
 }
 toml_get_table_names() { jq -r -e 'to_entries[] | select(.value | type == "object") | .key' <<<"$__TOML__"; }
+toml_get_table_names_ordered() { 
+	# Read TOML file directly to preserve order
+	grep -E '^\[.*\]$' "${__TOML_FILE__}" | sed 's/^\[\(.*\)\]$/\1/' 
+}
 toml_get_table_main() { jq -r -e 'to_entries | map(select(.value | type != "object")) | from_entries' <<<"$__TOML__"; }
 toml_get_table() { jq -r -e ".\"${1}\"" <<<"$__TOML__"; }
 toml_get() {
@@ -238,9 +243,9 @@ generate_download_table() {
 	local temp_table="${TEMP_DIR}/table_data.txt"
 	: > "$temp_table"
 	
-	# Get config order from toml
+	# Get config order from toml (preserving original order)
 	local config_order=()
-	for table_name in $(toml_get_table_names); do
+	for table_name in $(toml_get_table_names_ordered); do
 		if [ -n "$table_name" ]; then
 			config_order+=("$table_name")
 		fi
