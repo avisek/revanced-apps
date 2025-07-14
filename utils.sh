@@ -283,7 +283,7 @@ generate_download_table() {
 				local download_link="[${link_text}](${download_url})"
 				echo "${table_name}|${version_badge}|${app_display_name}|${build_type}|${download_link}" >> "$temp_table"
 			fi
-		done < "${TEMP_DIR}/build_files.txt"
+		done < <(sort "${TEMP_DIR}/build_files.txt")
 	done
 	
 	# Group by app and version
