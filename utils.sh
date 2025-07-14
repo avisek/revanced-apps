@@ -228,12 +228,6 @@ generate_download_table() {
 		return
 	fi
 	
-	# Debug: Log build_files.txt contents
-	epr "DEBUG: Contents of build_files.txt:"
-	while IFS= read -r line; do
-		epr "  $line"
-	done < "${TEMP_DIR}/build_files.txt"
-	
 	# Initialize table
 	log "## 📥 Downloads\n"
 	log "| App  | APK<br/><sup>Non-Root</sup> | Module<br/><sup>Root</sup> |"
@@ -290,12 +284,6 @@ generate_download_table() {
 			fi
 		done < <(sort "${TEMP_DIR}/build_files.txt")
 	done
-	
-	# Debug: Log table_data.txt contents
-	epr "DEBUG: Contents of table_data.txt:"
-	while IFS= read -r line; do
-		epr "  $line"
-	done < "$temp_table"
 	
 	# Group by app and version
 	local current_table=""
