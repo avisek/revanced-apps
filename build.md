@@ -2,10 +2,9 @@
   
 | App  | APK<br/><sup>Non-Root</sup> | Module<br/><sup>Root</sup> |  
 | :--- | :-------------------------- | :------------------------- |  
-| **YouTube**<br/><sup>`19.47.53` `extended`</sup> | [**APK**<br/><sup>arm-v7a</sup>](https://github.com/avisek/revanced-apps/releases/download/3/youtube-revanced-extended-v19.47.53-arm-v7a.apk)<br/>[**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/3/youtube-revanced-extended-v19.47.53-arm64-v8a.apk) | [**Module**<br/><sup>arm-v7a</sup>](https://github.com/avisek/revanced-apps/releases/download/3/youtube-revanced-extended-magisk-v19.47.53-arm-v7a.zip)<br/>[**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/3/youtube-revanced-extended-magisk-v19.47.53-arm64-v8a.zip) |  
-| **YouTube Music**<br/><sup>`8.12.53` `extended`</sup> | [**APK**<br/><sup>arm-v7a</sup>](https://github.com/avisek/revanced-apps/releases/download/3/youtube-music-revanced-extended-v8.12.53-arm-v7a.apk)<br/>[**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/3/youtube-music-revanced-extended-v8.12.53-arm64-v8a.apk) | [**Module**<br/><sup>arm-v7a</sup>](https://github.com/avisek/revanced-apps/releases/download/3/youtube-music-revanced-extended-magisk-v8.12.53-arm-v7a.zip)<br/>[**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/3/youtube-music-revanced-extended-magisk-v8.12.53-arm64-v8a.zip) |  
-| **Google Photos**<br/><sup>`7.39.0.787784983`</sup> | [**APK**<br/><sup>arm-v7a</sup>](https://github.com/avisek/revanced-apps/releases/download/3/google-photos-revanced-v7.39.0.787784983-arm-v7a.apk)<br/>[**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/3/google-photos-revanced-v7.39.0.787784983-arm64-v8a.apk) | [**Module**<br/><sup>arm-v7a</sup>](https://github.com/avisek/revanced-apps/releases/download/3/google-photos-revanced-magisk-v7.39.0.787784983-arm-v7a.zip)<br/>[**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/3/google-photos-revanced-magisk-v7.39.0.787784983-arm64-v8a.zip) |  
-| **Spotify**<br/><sup>`9.0.66.654`</sup> | [**APK**<br/><sup>arm-v7a</sup>](https://github.com/avisek/revanced-apps/releases/download/3/spotify-revanced-v9.0.66.654-arm-v7a.apk)<br/>[**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/3/spotify-revanced-v9.0.66.654-arm64-v8a.apk) | - |  
+| **YouTube**<br/><sup>`19.47.53` `extended`</sup> | [**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/4/youtube-revanced-extended-v19.47.53-arm64-v8a.apk) | [**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/4/youtube-revanced-extended-magisk-v19.47.53-arm64-v8a.zip) |  
+| **YouTube Music**<br/><sup>`8.12.53` `extended`</sup> | [**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/4/youtube-music-revanced-extended-v8.12.53-arm64-v8a.apk) | [**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/4/youtube-music-revanced-extended-magisk-v8.12.53-arm64-v8a.zip) |  
+| **Google Photos**<br/><sup>`7.40.0.790840830`</sup> | [**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/4/google-photos-revanced-v7.40.0.790840830-arm64-v8a.apk) | [**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/4/google-photos-revanced-magisk-v7.40.0.790840830-arm64-v8a.zip) |  
 
 ## 📌 Notes
   
@@ -22,8 +21,8 @@ Patches: inotia00/patches-5.8.1.rvp
 [Changelog](https://github.com/inotia00/revanced-patches/releases/tag/v5.8.1)
 
 CLI: j-hc/revanced-cli-5.0.0-all.jar  
-Patches: ReVanced/patches-5.32.0.rvp  
-[Changelog](https://github.com/ReVanced/revanced-patches/releases/tag/v5.32.0)  
+Patches: ReVanced/patches-5.33.0.rvp  
+[Changelog](https://github.com/ReVanced/revanced-patches/releases/tag/v5.33.0)  
 
 Skipped:  
-Patches: ReVanced/patches-5.32.0.rvp    
+Patches: inotia00/patches-5.8.1.rvp    
