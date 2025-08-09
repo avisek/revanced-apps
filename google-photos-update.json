@@ -1,6 +1,6 @@
 {
-  "version": "v7.40.0.790840830 (patches 5.33.0)",
-  "versionCode": 5,
-  "zipUrl": "https://github.com/avisek/revanced-apps/releases/download/5/google-photos-revanced-magisk-v7.40.0.790840830-arm64-v8a.zip",
+  "version": "v7.40.0.792701077 (patches 5.33.0)",
+  "versionCode": 6,
+  "zipUrl": "https://github.com/avisek/revanced-apps/releases/download/6/google-photos-revanced-magisk-v7.40.0.792701077-arm64-v8a.zip",
   "changelog": "https://raw.githubusercontent.com/avisek/revanced-apps/update/build.md"
 }
