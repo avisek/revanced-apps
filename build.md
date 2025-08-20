@@ -2,10 +2,10 @@
   
 | App  | APK<br/><sup>Non-Root</sup> | Module<br/><sup>Root</sup> |  
 | :--- | :-------------------------- | :------------------------- |  
-| **YouTube**<br/><sup>`19.47.53` `extended`</sup> | [**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/7/youtube-revanced-extended-v19.47.53-arm64-v8a.apk) | [**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/7/youtube-revanced-extended-magisk-v19.47.53-arm64-v8a.zip) |  
-| **YouTube Music**<br/><sup>`8.12.53` `extended`</sup> | [**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/7/youtube-music-revanced-extended-v8.12.53-arm64-v8a.apk) | [**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/7/youtube-music-revanced-extended-magisk-v8.12.53-arm64-v8a.zip) |  
-| **Google Photos**<br/><sup>`7.40.0.792701077`</sup> | [**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/7/google-photos-revanced-v7.40.0.792701077-arm64-v8a.apk) | [**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/7/google-photos-revanced-magisk-v7.40.0.792701077-arm64-v8a.zip) |  
-| **Spotify**<br/><sup>`9.0.68.613`</sup> | [**APK**<br/><sup>universal</sup>](https://github.com/avisek/revanced-apps/releases/download/7/spotify-revanced-v9.0.68.613-all.apk) | - |  
+| **YouTube**<br/><sup>`19.47.53` `extended`</sup> | [**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/8/youtube-revanced-extended-v19.47.53-arm64-v8a.apk) | [**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/8/youtube-revanced-extended-magisk-v19.47.53-arm64-v8a.zip) |  
+| **YouTube Music**<br/><sup>`8.12.53` `extended`</sup> | [**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/8/youtube-music-revanced-extended-v8.12.53-arm64-v8a.apk) | [**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/8/youtube-music-revanced-extended-magisk-v8.12.53-arm64-v8a.zip) |  
+| **Google Photos**<br/><sup>`7.41.0.795526889`</sup> | [**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/8/google-photos-revanced-v7.41.0.795526889-arm64-v8a.apk) | [**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/8/google-photos-revanced-magisk-v7.41.0.795526889-arm64-v8a.zip) |  
+| **Spotify**<br/><sup>`9.0.72.949`</sup> | [**APK**<br/><sup>universal</sup>](https://github.com/avisek/revanced-apps/releases/download/8/spotify-revanced-v9.0.72.949-all.apk) | - |  
 
 ## 📌 Notes
   
@@ -22,5 +22,8 @@ Patches: inotia00/patches-5.8.1.rvp
 [Changelog](https://github.com/inotia00/revanced-patches/releases/tag/v5.8.1)
 
 CLI: j-hc/revanced-cli-5.0.0-all.jar  
-Patches: ReVanced/patches-5.33.0.rvp  
-[Changelog](https://github.com/ReVanced/revanced-patches/releases/tag/v5.33.0)  
+Patches: ReVanced/patches-5.34.0.rvp  
+[Changelog](https://github.com/ReVanced/revanced-patches/releases/tag/v5.34.0)  
+
+Skipped:  
+Patches: inotia00/patches-5.8.1.rvp    
