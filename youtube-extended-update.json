@@ -1,6 +1,6 @@
 {
   "version": "v19.47.53 (patches 5.9.1)",
-  "versionCode": 10,
-  "zipUrl": "https://github.com/avisek/revanced-apps/releases/download/10/youtube-revanced-extended-magisk-v19.47.53-arm64-v8a.zip",
+  "versionCode": 11,
+  "zipUrl": "https://github.com/avisek/revanced-apps/releases/download/11/youtube-revanced-extended-magisk-v19.47.53-arm64-v8a.zip",
   "changelog": "https://raw.githubusercontent.com/avisek/revanced-apps/update/build.md"
 }
