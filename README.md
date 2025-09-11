@@ -10,7 +10,7 @@
 
 🚀 The latest ReVanced apps, available for both root and non-root users
 
-[![CI](https://github.com/avisek/revanced-apps/actions/workflows/ci.yml/badge.svg?event=schedule)](https://github.com/avisek/revanced-apps/actions/workflows/ci.yml)
+[![CI](https://github.com/avisek/revanced-apps/actions/workflows/ci.yml/badge.svg?event=schedule)](https://github.com/avisek/revanced-apps/actions)
 
 [![Download Latest Release](https://img.shields.io/badge/Download%20Latest%20Release-blue?style=for-the-badge&logo=abdownloadmanager&logoColor=white)](https://github.com/avisek/revanced-apps/releases)
 
