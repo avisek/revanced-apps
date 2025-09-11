@@ -183,7 +183,7 @@ log "$(cat "$TEMP_DIR"/*-rv/changelog.md)"
 
 SKIPPED=$(cat "$TEMP_DIR"/skipped 2>/dev/null || :)
 if [ -n "$SKIPPED" ]; then
-	log "\nSkipped:"
+	log "\nUnchanged:"
 	log "$SKIPPED"
 fi
 
