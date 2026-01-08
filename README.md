@@ -22,7 +22,7 @@
 
 - **<a href="https://github.com/avisek/revanced-apps/releases"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_(2017).svg" width="19" height="19" align="absmiddle"/></a> YouTube** - ReVanced Extended
 - **<a href="https://github.com/avisek/revanced-apps/releases"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Youtube_Music_icon.svg" width="19" height="19" align="absmiddle"/></a> YouTube Music** - ReVanced Extended
-- **<a href="https://github.com/avisek/revanced-apps/releases"><img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Photos_icon_(2020).svg" width="19" height="19" align="absmiddle"/></a> Google Photos** - Unlimited Storage
+- **<a href="https://github.com/avisek/revanced-apps/releases"><img src="https://upload.wikimedia.org/wikipedia/commons/5/50/Google_Photos_icon_(2020-2025).svg" width="19" height="19" align="absmiddle"/></a> Google Photos** - Unlimited Storage
 - **<a href="https://github.com/avisek/revanced-apps/releases"><img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" width="19" height="19" align="absmiddle"/></a> Spotify** - Premium Unlocked
 
 ## ✨ Features
