@@ -2,10 +2,10 @@
   
 | App  | APK<br/><sup>Non-Root</sup> | Module<br/><sup>Root</sup> |  
 | :--- | :-------------------------- | :------------------------- |  
-| **YouTube**<br/><sup>`20.05.46` `extended`</sup> | [**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/33/youtube-revanced-extended-v20.05.46-arm64-v8a.apk) | [**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/33/youtube-revanced-extended-magisk-v20.05.46-arm64-v8a.zip) |  
-| **YouTube Music**<br/><sup>`8.30.54` `extended`</sup> | [**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/33/youtube-music-revanced-extended-v8.30.54-arm64-v8a.apk) | [**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/33/youtube-music-revanced-extended-magisk-v8.30.54-arm64-v8a.zip) |  
-| **Google Photos**<br/><sup>`7.59.0.856624550`</sup> | [**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/33/google-photos-revanced-v7.59.0.856624550-arm64-v8a.apk) | [**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/33/google-photos-revanced-magisk-v7.59.0.856624550-arm64-v8a.zip) |  
-| **Spotify**<br/><sup>`9.0.76.1115`</sup> | [**APK**<br/><sup>universal</sup>](https://github.com/avisek/revanced-apps/releases/download/33/spotify-revanced-v9.0.76.1115-all.apk) | - |  
+| **YouTube**<br/><sup>`20.40.45`</sup> | [**APK**<br/><sup>universal</sup>](https://github.com/avisek/revanced-apps/releases/download/34/youtube-morphe-v20.40.45-all.apk) | [**Module**<br/><sup>universal</sup>](https://github.com/avisek/revanced-apps/releases/download/34/youtube-morphe-magisk-v20.40.45-all.zip) |  
+| **Music**<br/><sup>`8.40.54`</sup> | [**APK**<br/><sup>arm-v7a</sup>](https://github.com/avisek/revanced-apps/releases/download/34/music-morphe-v8.40.54-arm-v7a.apk)<br/>[**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/34/music-morphe-v8.40.54-arm64-v8a.apk) | [**Module**<br/><sup>arm-v7a</sup>](https://github.com/avisek/revanced-apps/releases/download/34/music-morphe-magisk-v8.40.54-arm-v7a.zip)<br/>[**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/34/music-morphe-magisk-v8.40.54-arm64-v8a.zip) |  
+| **Google Photos**<br/><sup>`7.63.0.869312946`</sup> | [**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/34/google-photos-revanced-v7.63.0.869312946-arm64-v8a.apk) | [**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/34/google-photos-revanced-magisk-v7.63.0.869312946-arm64-v8a.zip) |  
+| **Spotify**<br/><sup>`9.0.76.1115`</sup> | [**APK**<br/><sup>universal</sup>](https://github.com/avisek/revanced-apps/releases/download/34/spotify-revanced-v9.0.76.1115-all.apk) | - |  
 
 ## 📌 Notes
   
@@ -21,9 +21,10 @@ CLI: inotia00/revanced-cli-5.0.2-all.jar
 Patches: inotia00/patches-5.14.1.rvp  
 [Changelog](https://github.com/inotia00/revanced-patches/releases/tag/v5.14.1)
 
-CLI: j-hc/revanced-cli-5.0.0-all.jar  
-Patches: ReVanced/patches-5.48.0.rvp  
-[Changelog](https://github.com/ReVanced/revanced-patches/releases/tag/v5.48.0)  
+CLI: MorpheApp/morphe-cli-1.3.0-all.jar  
+Patches: MorpheApp/patches-1.13.0.mpp  
+[Changelog](https://github.com/MorpheApp/morphe-patches/releases/tag/v1.13.0)
 
-Unchanged:  
-Patches: inotia00/patches-5.14.1.rvp    
+CLI: ReVanced/revanced-cli-5.0.1-all.jar  
+Patches: ReVanced/patches-5.50.2.rvp  
+[Changelog](https://github.com/ReVanced/revanced-patches/releases/tag/v5.50.2)  
