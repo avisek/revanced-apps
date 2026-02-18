@@ -276,11 +276,11 @@ generate_download_table() {
 				# Create app display name
 				local app_display_name="$app_name"
 				
-				# Add extended badge for ReVanced Extended
 				local version_badge="\`${version}\`"
-				if [ "$rv_brand" = "ReVanced Extended" ]; then
-					version_badge="${version_badge} \`extended\`"
-				fi
+				case "$rv_brand" in
+					"ReVanced Extended") version_badge="${version_badge} \`Extended\`" ;;
+					"Morphe") version_badge="${version_badge} \`Morphe\`" ;;
+				esac
 				
 				# Build download link
 				local link_text
