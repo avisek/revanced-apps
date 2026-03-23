@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-MODULE_TEMPLATE_DIR="revanced-magisk"
+MODULE_TEMPLATE_DIR="module"
 CWD=$(pwd)
 TEMP_DIR="temp"
 BIN_DIR="bin"
@@ -50,7 +50,8 @@ wpr() {
 }
 abort() {
 	epr "ABORT: ${1-}"
-	exit 1
+	rm -rf ./${TEMP_DIR}/*tmp.* ./${TEMP_DIR}/*/*tmp.* ./${TEMP_DIR}/*-temporary-files
+	kill -n 9 0
 }
 java() { env -i java "$@"; }
 
@@ -89,17 +90,25 @@ get_prebuilts() {
 			name_ver="$ver"
 		fi
 
-		local url file tag_name name
+		local url file tag_name matches
 		file=$(find "$dir" -name "*${fprefix}-${name_ver#v}.*" -type f 2>/dev/null)
 		if [ -z "$file" ]; then
 			local resp asset name
 			resp=$(gh_req "$rv_rel" -) || return 1
 			tag_name=$(jq -r '.tag_name' <<<"$resp")
-			matches=$(jq -e '.assets | map(select(.name | endswith("asc") | not))' <<<"$resp")
+			matches=$(jq -e '.assets | map(select(.name | (endswith("asc") or endswith("json")) | not))' <<<"$resp")
+			if [ "$(jq 'length' <<<"$matches")" -gt 1 ]; then
+				local matches_new
+				matches_new=$(jq -e -r 'map(select(.name | contains("-dev") | not))' <<<"$matches")
+				if [ "$(jq 'length' <<<"$matches_new")" -eq 1 ]; then
+					matches=$matches_new
+				fi
+			fi
 			if [ "$(jq 'length' <<<"$matches")" -eq 0 ]; then
-				abort "No asset was found"
+				epr "No asset was found"
+				return 1
 			elif [ "$(jq 'length' <<<"$matches")" -ne 1 ]; then
-				wpr "More than 1 asset was found for this cli release. Falling back to the first one found..."
+				wpr "More than 1 asset was found for this release. Falling back to the first one found..."
 			fi
 			asset=$(jq -r ".[0]" <<<"$matches")
 			url=$(jq -r .url <<<"$asset")
@@ -123,7 +132,7 @@ get_prebuilts() {
 			if [ $grab_cl = true ]; then echo -e "[Changelog](https://github.com/${src}/releases/tag/${tag_name})\n" >>"${cl_dir}/changelog.md"; fi
 			if [ "$REMOVE_RV_INTEGRATIONS_CHECKS" = true ]; then
 				local extensions_ext
-				extensions_ext=$(unzip -l "${file}" "extensions/shared*" | grep -o "shared.*") extensions_ext="${extensions_ext#*.}"
+				extensions_ext=$(unzip -l "${file}" "extensions/shared.*" | grep -o "shared\..*") extensions_ext="${extensions_ext#*.}"
 				if ! (
 					mkdir -p "${file}-zip" || return 1
 					unzip -qo "${file}" -d "${file}-zip" || return 1
@@ -178,8 +187,8 @@ config_update() {
 			else
 				last_patches=$(gh_req "$rv_rel/tags/${ver}" -)
 			fi
-			if ! last_patches=$(jq -e -r '.assets[] | select(.name | endswith("asc") | not) | .name' <<<"$last_patches"); then
-				abort oops
+			if ! last_patches=$(jq -e -r '.assets[] | select(.name | (endswith("asc") or endswith("json")) | not) | .name' <<<"$last_patches"); then
+				abort "config_update error: '$last_patches'"
 			fi
 			if [ "$last_patches" ]; then
 				if ! OP=$(grep "^Patches: ${PATCHES_SRC%%/*}/" build.md | grep -m1 "$last_patches"); then
@@ -388,14 +397,36 @@ get_patch_last_supported_ver() {
 			return
 		fi
 	fi
-	op=$(java -jar "$cli_jar" list-versions "$patches_jar" -f "$pkg_name" 2>&1 | tail -n +3 | awk '{$1=$1}1')
+	op=$(patches_list_versions "$cli_jar" "$patches_jar" "$pkg_name") || return 1
+	op=$(tail -n +3 <<<"$op" | awk '{$1=$1}1')
 	if [ "$op" = "Any" ]; then return; fi
 	pcount=$(head -1 <<<"$op") pcount=${pcount#*(} pcount=${pcount% *}
 	if [ -z "$pcount" ]; then
-		av_apps=$(java -jar "$cli_jar" list-versions "$patches_jar" 2>&1 | awk '/Package name:/ { printf "%s\x27%s\x27", sep, $NF; sep=", " } END { print "" }')
-		abort "No patch versions found for '$pkg_name' in this patches source!\nAvailable applications found: $av_apps"
+		abort "No patches found for '$pkg_name' in patches '$patches_jar'"
 	fi
 	grep -F "($pcount patch" <<<"$op" | sed 's/ (.* patch.*//' | get_highest_ver || return 1
+}
+
+patches_list_versions() {
+	local cli_jar=$1 patches_jar=$2 pkg_name=$3 op
+	if ! op=$(java -jar "$cli_jar" list-versions -p "$patches_jar" -f "$pkg_name" -b 2>&1); then
+		if ! op=$(java -jar "$cli_jar" list-versions "$patches_jar" -f "$pkg_name" 2>&1); then
+			epr "Could not list versions $cli_jar: '$op'"
+			return 1
+		fi
+	fi
+	echo "$op"
+}
+patches_list() {
+	local cli_jar=$1 patches_jar=$2 pkg_name=$3 op
+	if ! op=$(java -jar "$cli_jar" list-patches -p "$patches_jar" --filter-package-name "$pkg_name" --versions --packages -b 2>&1); then
+		if ! op=$(java -jar "$cli_jar" list-patches --patches "$patches_jar" -f "$pkg_name" --with-versions --with-packages 2>&1); then
+			epr "Could not get patches list $cli_jar: '$op'"
+			return 1
+		fi
+
+	fi
+	echo "$op"
 }
 
 isoneof() {
@@ -413,22 +444,10 @@ merge_splits() {
 		epr "Apkeditor ERROR: $OP"
 		return 1
 	fi
-	# this is required because of apksig
-	mkdir "${bundle}-zip"
-	unzip -qo "${bundle}.mzip" -d "${bundle}-zip"
-	(
-		cd "${bundle}-zip" || abort
-		zip -0rq "${CWD}/${bundle}.zip" .
-	)
-	# if building module, sign the merged apk properly
-	if isoneof "module" "${build_mode_arr[@]}"; then
-		patch_apk "${bundle}.zip" "${output}" "--exclusive" "${args[cli]}" "${args[ptjar]}"
-		local ret=$?
-	else
-		cp "${bundle}.zip" "${output}"
-		local ret=$?
-	fi
-	rm -r "${bundle}-zip" "${bundle}.zip" "${bundle}.mzip" || :
+	# sign the merged apk properly
+	patch_apk "${bundle}.mzip" "${output}" "--exclusive" "${args[cli]}" "${args[ptjar]}"
+	local ret=$?
+	rm -f "${bundle}.mzip"
 	return $ret
 }
 
@@ -595,12 +614,27 @@ get_archive_resp() {
 }
 get_archive_vers() { sed 's/^[^-]*-//;s/-\(all\|arm64-v8a\|arm-v7a\)\.apk//g' <<<"$__ARCHIVE_RESP__"; }
 get_archive_pkg_name() { echo "$__ARCHIVE_PKG_NAME__"; }
+
+# -------------------- direct --------------------
+dl_direct() {
+	local url=$1 version=${2// /-} output=$3 arch=$4 dpi=$5
+	req "$url" "${output}" || return 1
+}
+get_direct_vers() { cut -d- -f2 <<<"$__DIRECT_APKNAME__"; }
+get_direct_pkg_name() { cut -d- -f1 <<<"$__DIRECT_APKNAME__"; }
+get_direct_resp() { __DIRECT_APKNAME__=$(awk -F/ '{print $NF}' <<<"$1"); }
 # --------------------------------------------------
 
 patch_apk() {
 	local stock_input=$1 patched_apk=$2 patcher_args=$3 cli_jar=$4 patches_jar=$5
 	local cmd="java -jar '$cli_jar' patch '$stock_input' --purge -o '$patched_apk' -p '$patches_jar' --keystore=ks.keystore \
 --keystore-entry-password=123456789 --keystore-password=123456789 --signer=jhc --keystore-entry-alias=jhc $patcher_args"
+
+	# TODO: remove this later
+	local cli_name
+	cli_name=$(basename "$cli_jar")
+	if [ "${cli_name::8}" = revanced ]; then cmd+=" -b"; fi
+
 	if [ "$OS" = Android ]; then cmd+=" --custom-aapt2-binary='${AAPT2}'"; fi
 	pr "$cmd"
 	if eval "$cmd"; then [ -f "$patched_apk" ]; else
@@ -654,13 +688,13 @@ build_rv() {
 		return 0
 	fi
 	local list_patches
-	list_patches=$(java -jar "$cli_jar" list-patches "$patches_jar" -f "$pkg_name" -v -p 2>&1)
-
+	list_patches=$(patches_list "$cli_jar" "$patches_jar" "$pkg_name") || return 1
 	local get_latest_ver=false
 	if [ "$version_mode" = auto ]; then
 		if ! version=$(get_patch_last_supported_ver "$list_patches" "$pkg_name" \
 			"${args[included_patches]}" "${args[excluded_patches]}" "${args[exclusive_patches]}"); then
-			exit 1
+			epr "get_patch_last_supported_ver failed '$list_patches'"
+			return
 		elif [ -z "$version" ]; then get_latest_ver=true; fi
 	elif isoneof "$version_mode" latest beta; then
 		get_latest_ver=true
@@ -718,7 +752,7 @@ build_rv() {
 	local microg_patch
 	microg_patch=$(grep "^Name: " <<<"$list_patches" | grep -i "gmscore\|microg" || :) microg_patch=${microg_patch#*: }
 	if [ -n "$microg_patch" ] && [[ ${p_patcher_args[*]} =~ $microg_patch ]]; then
-		epr "You cant include/exclude microg patch as that's done by rvmm builder automatically."
+		wpr "You cant include/exclude microg patch as that's done by rvmm builder automatically."
 		p_patcher_args=("${p_patcher_args[@]//-[ei] ${microg_patch}/}")
 	fi
 
@@ -786,11 +820,11 @@ build_rv() {
 			"${args[module_prop_name]}" \
 			"${app_name} ${args[rv_brand]}" \
 			"${version} (patches ${patches_ver})" \
-			"${app_name} ${args[rv_brand]} Magisk module" \
+			"${app_name} ${args[rv_brand]} module" \
 			"https://raw.githubusercontent.com/${GITHUB_REPOSITORY-}/update/${upj}" \
 			"$base_template"
 
-		local module_output="${app_name_l}-${rv_brand_f}-magisk-v${version_f}-${arch_f}.zip"
+		local module_output="${app_name_l}-${rv_brand_f}-module-v${version_f}-${arch_f}.zip"
 		pr "Packing module ${table}"
 		cp -f "$patched_apk" "${base_template}/base.apk"
 		if [ "${args[include_stock]}" = true ]; then cp -f "$stock_apk" "${base_template}/${pkg_name}.apk"; fi
@@ -825,5 +859,5 @@ versionCode=${NEXT_VER_CODE}
 author=avisek
 description=${4}" >"${6}/module.prop"
 
-	if [ "$ENABLE_MAGISK_UPDATE" = true ]; then echo "updateJson=${5}" >>"${6}/module.prop"; fi
+	if [ "$ENABLE_MODULE_UPDATE" = true ]; then echo "updateJson=${5}" >>"${6}/module.prop"; fi
 }
