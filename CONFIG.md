@@ -1,7 +1,6 @@
 # Config
 
 Adding another revanced app is as easy as this:
-
 ```toml
 [Some-App]
 apkmirror-dlurl = "https://www.apkmirror.com/apk/inc/app"
@@ -13,15 +12,14 @@ apkmirror-dlurl = "https://www.apkmirror.com/apk/inc/app"
 
 ## More about other options:
 
-There exists an example below with all defaults shown and all the keys explicitly set.
-**All keys are optional** (except download urls) and are assigned to their default values if not set explicitly.
+There exists an example below with all defaults shown and all the keys explicitly set.  
+**All keys are optional** (except download urls) and are assigned to their default values if not set explicitly.  
 
 ```toml
 parallel-jobs = 1                    # amount of cores to use for parallel patching, if not set $(nproc) is used
 compression-level = 9                # module zip compression level
 remove-rv-integrations-checks = true # remove checks from the revanced integrations
 dpi = "nodpi anydpi 120-640dpi"      # dpi packages to be searched in order. default: "nodpi anydpi"
-rebuild-all-on-update = false        # if true, rebuild all apps when any update is available instead of selective updates. default: false
 
 patches-source = "revanced/revanced-patches" # where to fetch patches bundle from. default: "revanced/revanced-patches"
 cli-source = "ReVanced/revanced-cli"             # where to fetch cli from. default: "ReVanced/revanced-cli"
@@ -54,7 +52,7 @@ excluded-patches = """\
   """
 
 included-patches = "'Some Patch'"                          # whitespace seperated list of non-default patches to include. default: ""
-include-stock = true                                       # includes stock apk in the module. default: true
+include-stock = "merged"                                   # 'merged', 'split' or 'disable'. default: merged
 exclusive-patches = false                                  # exclude all patches by default. default: false
 
 apkmirror-dlurl = "https://www.apkmirror.com/apk/inc/app"
