@@ -1,0 +1,54 @@
+# Merges j-hc/revanced-magisk-module into main weekly.
+# Clean merge -> pushed directly. Conflict or drift outside the known custom
+# surface (see `allow` regex) -> aborts and opens an issue for manual merge.
+name: Sync Upstream
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 8 * * 1"
+
+jobs:
+  sync:
+    permissions:
+      contents: write
+      issues: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Merge upstream
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote add upstream https://github.com/j-hc/revanced-magisk-module
+          git fetch upstream main
+          if git merge-base --is-ancestor upstream/main HEAD; then
+            echo "already up to date"
+            exit 0
+          fi
+          if ! git merge --no-edit upstream/main; then
+            git merge --abort
+            echo "::error::merge conflict, manual merge needed"
+            exit 1
+          fi
+          allow='^(\.github/workflows/(build|ci|sync-upstream)\.yml|CONFIG\.md|README\.md|build\.sh|config\.toml|module/customize\.sh|utils\.sh)$'
+          unexpected=$(git diff upstream/main --name-only | grep -Ev "$allow" || :)
+          if [ "$unexpected" ]; then
+            echo "::error::unexpected drift from upstream (possible force-push residue):"
+            echo "$unexpected"
+            exit 1
+          fi
+          git push origin main
+
+      - name: Open issue on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TITLE="Upstream sync needs manual merge"
+          if [ -z "$(gh issue list --state open --search "$TITLE in:title" --json number -q '.[0].number')" ]; then
+            gh issue create --title "$TITLE" \
+              --body "Automatic upstream sync failed (conflict or unexpected drift). See $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          fi
