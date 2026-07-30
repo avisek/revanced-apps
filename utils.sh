@@ -418,6 +418,13 @@ patches_list_versions() {
 		return
 	fi
 
+	# v5-line clis (inotia00) take patches files as positionals and have no -b
+	cmd="java -jar '$cli_jar' list-versions '$patches_jar' -f '$pkg_name'"
+	if op=$(eval "$cmd" 2>&1); then
+		echo "$op"
+		return
+	fi
+
 	epr "Could not list versions ($pkg_name) $cli_jar: '$op'"
 	return 1
 }
@@ -425,8 +432,11 @@ patches_list() {
 	local cli_jar=$1 patches_jar=$2 pkg_name=$3 op
 	if ! op=$(java -jar "$cli_jar" list-patches -p "$patches_jar" --filter-package-name "$pkg_name" --versions --packages -b 2>&1); then
 		if ! op=$(java -jar "$cli_jar" list-patches --patches "$patches_jar" -f "$pkg_name" --with-versions --with-packages 2>&1); then
-			epr "Could not get patches list ($pkg_name) $cli_jar: '$op'"
-			return 1
+			# v5-line clis (inotia00) take patches files as positionals
+			if ! op=$(java -jar "$cli_jar" list-patches "$patches_jar" -f "$pkg_name" -v -p 2>&1); then
+				epr "Could not get patches list ($pkg_name) $cli_jar: '$op'"
+				return 1
+			fi
 		fi
 
 	fi
@@ -671,9 +681,10 @@ patch_apk() {
 --keystore-entry-password=123456789 --keystore-password=123456789 --signer=jhc --keystore-entry-alias=jhc -t '$tmp_files' $patcher_args"
 
 	# TODO: remove this later
+	# v5-line clis (inotia00) are also named revanced-* but have no -b, so probe the help
 	local cli_name
 	cli_name=$(basename "$cli_jar")
-	if [ "${cli_name::8}" = revanced ]; then cmd+=" -b"; fi
+	if [ "${cli_name::8}" = revanced ] && java -jar "$cli_jar" patch --help 2>&1 | grep -qE '^\s*-b[,= ]'; then cmd+=" -b"; fi
 
 	if [ "$OS" = Android ]; then cmd+=" --custom-aapt2-binary='${AAPT2}'"; fi
 	pr "$cmd"
