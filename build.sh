@@ -44,6 +44,7 @@ if [ "${2-}" = "--config-update" ]; then
 fi
 
 : >build.md
+: >"${TEMP_DIR}/build_files.txt"
 ENABLE_MODULE_UPDATE=$(toml_get "$main_config_t" enable-module-update) || ENABLE_MODULE_UPDATE=true
 if [ "$ENABLE_MODULE_UPDATE" = true ] && [ -z "${GITHUB_REPOSITORY-}" ]; then
 	pr "You are building locally. Module updates will not be enabled."
@@ -97,6 +98,7 @@ for table_name in $(toml_get_table_names); do
 	app_args[version]=$(toml_get "$t" version) || app_args[version]="auto"
 	app_args[app_name]=$(toml_get "$t" app-name) || app_args[app_name]=$table_name
 	app_args[patcher_args]=$(toml_get "$t" patcher-args) || app_args[patcher_args]=""
+	app_args[table_name]=$table_name
 	app_args[table]=$table_name
 	app_args[build_mode]=$(toml_get "$t" build-mode) && {
 		if ! isoneof "${app_args[build_mode]}" both apk module; then
@@ -161,14 +163,19 @@ wait
 _clean_tmp
 if [ -z "$(ls -A1 "${BUILD_DIR}")" ]; then abort "All builds failed."; fi
 
-log "\nInstall [Microg](https://github.com/MorpheApp/MicroG-RE/) for non-root YouTube and YT Music APKs"
-log "Use [zygisk-detach](https://github.com/j-hc/zygisk-detach) to detach YouTube and YT Music modules from Play Store"
-log "\n[revanced-magisk-module](https://github.com/j-hc/revanced-magisk-module)\n"
+generate_download_table
+
+log "\n## 📌 Notes\n"
+log "**Non-root users**: Install [MicroG](https://github.com/MorpheApp/MicroG-RE) to use non-root versions of YouTube and YouTube Music.\n"
+log "**Root users**: Use [zygisk-detach](https://github.com/j-hc/zygisk-detach) to block Play Store from auto-updating YouTube and YouTube Music.\n"
+log "[Main Repo](https://github.com/avisek/revanced-apps)"
+
+log "\n## 🗒️ Changelog\n"
 log "$(cat "$TEMP_DIR"/*/changelog.md)"
 
 SKIPPED=$(cat "$TEMP_DIR"/skipped 2>/dev/null || :)
 if [ -n "$SKIPPED" ]; then
-	log "\nSkipped:"
+	log "\nUnchanged:"
 	log "$SKIPPED"
 fi
 

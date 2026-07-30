@@ -20,6 +20,10 @@ toml_prep() {
 	else abort "config extension not supported"; fi
 }
 toml_get_table_names() { jq -r -e 'to_entries[] | select(.value | type == "object") | .key' <<<"$__TOML__"; }
+# reads config.toml directly (not $__TOML__) to preserve table order even when building from config.json
+toml_get_table_names_ordered() {
+	grep -E '^\[.*\]$' config.toml | sed 's/^\[\(.*\)\]$/\1/'
+}
 toml_get_table_main() { jq -r -e 'to_entries | map(select(.value | type != "object")) | from_entries' <<<"$__TOML__"; }
 toml_get_table() { jq -r -e ".\"${1}\"" <<<"$__TOML__"; }
 toml_get() {
@@ -258,6 +262,95 @@ gh_dl() {
 }
 
 log() { echo -e "$1  " >>"build.md"; }
+
+generate_download_table() {
+	if [ ! -f "${TEMP_DIR}/build_files.txt" ]; then
+		return
+	fi
+
+	log "## 📥 Downloads\n"
+	log "| App  | APK<br/><sup>Non-Root</sup> | Module<br/><sup>Root</sup> |"
+	log "| :--- | :-------------------------- | :------------------------- |"
+
+	local base_url=""
+	if [ -n "${GITHUB_REPOSITORY-}" ] && [ -n "${NEXT_VER_CODE-}" ]; then
+		base_url="https://github.com/${GITHUB_REPOSITORY}/releases/download/${NEXT_VER_CODE}"
+	fi
+
+	# collect build rows in config order
+	local temp_table="${TEMP_DIR}/table_data.txt"
+	: >"$temp_table"
+
+	local config_order=()
+	for table_name in $(toml_get_table_names_ordered); do
+		if [ -n "$table_name" ]; then
+			config_order+=("$table_name")
+		fi
+	done
+
+	for table_name in "${config_order[@]}"; do
+		while IFS='|' read -r table version app_name rv_brand build_type arch filename; do
+			if [ "$table" = "$table_name" ]; then
+				local version_badge="\`${version}\`"
+				case "$rv_brand" in
+				"ReVanced Extended") version_badge="${version_badge} \`Extended\`" ;;
+				"Morphe") version_badge="${version_badge} \`Morphe\`" ;;
+				esac
+
+				local arch_display="$arch"
+				if [ "$arch" = "all" ]; then
+					arch_display="universal"
+				fi
+
+				local link_text
+				if [ "$build_type" = "apk" ]; then
+					link_text="**APK**<br/><sup>${arch_display}</sup>"
+				else
+					link_text="**Module**<br/><sup>${arch_display}</sup>"
+				fi
+
+				local download_link="[${link_text}](${base_url}/${filename})"
+				echo "${table_name}|${version_badge}|${app_name}|${build_type}|${download_link}" >>"$temp_table"
+			fi
+		done < <(sort "${TEMP_DIR}/build_files.txt")
+	done
+
+	# group rows by app and version
+	local current_table=""
+	local current_version_badge=""
+	local current_app_name=""
+	local apk_links=""
+	local module_links=""
+
+	table_row() {
+		local apk_cell="${apk_links:-"-"}"
+		local module_cell="${module_links:-"-"}"
+		local app_cell="**${current_app_name}**<br/><sup>${current_version_badge}</sup>"
+		log "| ${app_cell} | ${apk_cell} | ${module_cell} |"
+	}
+
+	while IFS='|' read -r table_name version_badge app_display_name build_type download_link; do
+		if [ "$table_name" != "$current_table" ] || [ "$version_badge" != "$current_version_badge" ]; then
+			if [ -n "$current_table" ]; then table_row; fi
+			current_table="$table_name"
+			current_version_badge="$version_badge"
+			current_app_name="$app_display_name"
+			apk_links=""
+			module_links=""
+		fi
+
+		if [ "$build_type" = "apk" ]; then
+			apk_links="${apk_links:+${apk_links}<br/>}${download_link}"
+		else
+			module_links="${module_links:+${module_links}<br/>}${download_link}"
+		fi
+	done <"$temp_table"
+
+	if [ -n "$current_table" ]; then table_row; fi
+
+	rm -f "$temp_table"
+}
+
 get_highest_ver() {
 	local vers m
 	vers=$(tee)
@@ -607,6 +700,7 @@ build_rv() {
 	local app_name=${args[app_name]}
 	local app_name_l=${app_name,,}
 	app_name_l=${app_name_l// /-}
+	local table_name=${args[table_name]}
 	local table=${args[table]}
 	local dl_from=${args[dl_from]}
 	local arch=${args[arch]}
@@ -716,8 +810,6 @@ build_rv() {
 			return 0
 		fi
 	fi
-	log "${table}: ${version}"
-
 	local microg_patch
 	microg_patch=$(grep "^Name: " <<<"$list_patches" | grep -i "gmscore\|microg" || :) microg_patch=${microg_patch#*: }
 	if [ -n "$microg_patch" ] && [[ ${p_patcher_args[*]} =~ $microg_patch ]]; then
@@ -778,6 +870,7 @@ build_rv() {
 				cp -f "$patched_apk" "$apk_output"
 			fi
 			pr "Built ${table} (non-root): '${apk_output}'"
+			echo "${table_name}|${version}|${app_name}|${args[rv_brand]}|apk|${arch}|$(basename "$apk_output")" >>"${TEMP_DIR}/build_files.txt"
 			continue
 		fi
 		local base_template
@@ -827,6 +920,7 @@ build_rv() {
 		zip -"$COMPRESSION_LEVEL" -FSqr "${CWD}/${BUILD_DIR}/${module_output}" .
 		popd >/dev/null || :
 		pr "Built ${table} (root): '${BUILD_DIR}/${module_output}'"
+		echo "${table_name}|${version}|${app_name}|${args[rv_brand]}|module|${arch}|${module_output}" >>"${TEMP_DIR}/build_files.txt"
 	done
 }
 
