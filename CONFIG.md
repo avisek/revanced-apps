@@ -20,6 +20,7 @@ parallel-jobs = 1                    # amount of cores to use for parallel patch
 compression-level = 9                # module zip compression level
 remove-rv-integrations-checks = true # remove checks from the revanced integrations
 dpi = "nodpi anydpi 120-640dpi"      # dpi packages to be searched in order. default: "nodpi anydpi"
+rebuild-all-on-update = false        # rebuild every app when any patch source updates, instead of only the updated ones. default: false
 
 patches-source = "revanced/revanced-patches" # where to fetch patches bundle from. default: "revanced/revanced-patches"
 cli-source = "ReVanced/revanced-cli"             # where to fetch cli from. default: "ReVanced/revanced-cli"

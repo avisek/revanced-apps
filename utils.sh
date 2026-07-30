@@ -214,12 +214,16 @@ config_update() {
 		fi
 	done
 	if [ "$prcfg" = true ]; then
-		local query=""
-		for table in "${upped[@]}"; do
-			if [ -n "$query" ]; then query+=" or "; fi
-			query+=".key == \"$table\""
-		done
-		jq "to_entries | map(select(${query} or (.value | type != \"object\"))) | from_entries" <<<"$__TOML__"
+		if [ "${REBUILD_ALL_ON_UPDATE:-false}" = "true" ]; then
+			echo "$__TOML__"
+		else
+			local query=""
+			for table in "${upped[@]}"; do
+				if [ -n "$query" ]; then query+=" or "; fi
+				query+=".key == \"$table\""
+			done
+			jq "to_entries | map(select(${query} or (.value | type != \"object\"))) | from_entries" <<<"$__TOML__"
+		fi
 	fi
 }
 
