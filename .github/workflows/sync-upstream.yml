@@ -51,5 +51,6 @@ jobs:
           TITLE="Upstream sync needs manual merge"
           if [ -z "$(gh issue list --state open --search "$TITLE in:title" --json number -q '.[0].number')" ]; then
             gh issue create --title "$TITLE" \
-              --body "Automatic upstream sync failed (conflict or unexpected drift). See $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+              --body "Automatic upstream sync failed (conflict or unexpected drift). See $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
+              || echo "could not open issue (issues disabled?)"
           fi
