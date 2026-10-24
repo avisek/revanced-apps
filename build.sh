@@ -167,7 +167,7 @@ if [ -z "$(ls -A1 "${BUILD_DIR}")" ]; then abort "All builds failed."; fi
 generate_download_table
 
 log "\n## 📌 Notes\n"
-log "**Non-root users**: Install [MicroG](https://github.com/MorpheApp/MicroG-RE) to use non-root versions of YouTube and YouTube Music.\n"
+log "**Non-root users**: Install [MicroG](https://github.com/MorpheApp/MicroG-RE) to use non-root versions of YouTube, YouTube Music and Google Photos.\n"
 log "**Root users**: Use [zygisk-detach](https://github.com/j-hc/zygisk-detach) to block Play Store from auto-updating YouTube and YouTube Music.\n"
 log "[Main Repo](https://github.com/avisek/revanced-apps)"
 

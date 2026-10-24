@@ -300,8 +300,9 @@ generate_download_table() {
 			if [ "$table" = "$table_name" ]; then
 				local version_badge="\`${version}\`"
 				case "$rv_brand" in
+				"ReVanced") ;;
 				"ReVanced Extended") version_badge="${version_badge} \`Extended\`" ;;
-				"Morphe") version_badge="${version_badge} \`Morphe\`" ;;
+				*) version_badge="${version_badge} \`${rv_brand}\`" ;;
 				esac
 
 				local arch_display="$arch"

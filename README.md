@@ -22,6 +22,7 @@
 
 - **<a href="https://github.com/avisek/revanced-apps/releases"><img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_(2017).svg" width="19" height="19" align="absmiddle"/></a> YouTube** - ReVanced Extended & Morphe
 - **<a href="https://github.com/avisek/revanced-apps/releases"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Youtube_Music_icon.svg" width="19" height="19" align="absmiddle"/></a> YouTube Music** - ReVanced Extended & Morphe
+- **<a href="https://github.com/avisek/revanced-apps/releases"><img src="https://upload.wikimedia.org/wikipedia/commons/5/50/Google_Photos_icon_%282020-2025%29.svg" width="19" height="19" align="absmiddle"/></a> Google Photos** - De-Vanced
 
 ## ✨ Features
 
@@ -41,11 +42,13 @@
 
 ## 📌 Important Notes
 
-- **📱 Non-root users** - Install [MicroG](https://github.com/MorpheApp/MicroG-RE) to use non-root versions of YouTube and YouTube Music
+- **📱 Non-root users** - Install [MicroG](https://github.com/MorpheApp/MicroG-RE) to use non-root versions of YouTube, YouTube Music and Google Photos
 - **🔐 Root users** - Use [zygisk-detach](https://github.com/j-hc/zygisk-detach) to block Play Store from auto-updating YouTube and YouTube Music
+- **🧩 Mount issues** - "Reflash needed" after reboots or "suspicious mount" warnings? Try [rvmm-zygisk-mount](https://github.com/j-hc/rvmm-zygisk-mount)
 
 ## 🎖️ Credits
 
 - **[j-hc](https://github.com/j-hc)** - Creator of [zygisk-detach](https://github.com/j-hc/zygisk-detach) and the [original script](https://github.com/j-hc/revanced-magisk-module) this project is based on
 - **[Morphe](https://github.com/MorpheApp)** - Developers of [Morphe patches](https://github.com/MorpheApp/morphe-patches) and [MicroG-RE](https://github.com/MorpheApp/MicroG-RE)
 - **[inotia00](https://github.com/inotia00)** & **[anddea](https://github.com/anddea)** - Creator and current maintainer of [ReVanced Extended patches](https://github.com/anddea/revanced-patches)
+- **[RookieEnough](https://github.com/RookieEnough)** - Developer of [De-Vanced patches](https://github.com/RookieEnough/De-Vanced)

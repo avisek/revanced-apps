@@ -48,17 +48,12 @@ arch = "arm64-v8a"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube-music"
 archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.google.android.apps.youtube.music"
 
-# disabled: default patches source (ReVanced/revanced-patches) is DMCA'd and no
-# living source ships Google Photos patches. re-enable if one appears.
 [Google-Photos]
-enabled = false
 app-name = "Google Photos"
+patches-source = "RookieEnough/De-Vanced"
+cli-source = "MorpheApp/morphe-cli"
+rv-brand = "DeVanced"
 build-mode = "both"
 arch = "arm64-v8a"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/photos"
 archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.google.android.apps.photos"
-
-[Spotify]
-enabled = false
-arch = "all"
-archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.spotify.music"
