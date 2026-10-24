@@ -9,10 +9,10 @@ rebuild-all-on-update = true # set this to false to rebuild only the apps that h
 
 [YouTube-Extended]
 app-name = "YouTube"
-patches-source = "inotia00/revanced-patches"
-cli-source = "inotia00/revanced-cli"
+patches-source = "anddea/revanced-patches"
+cli-source = "MorpheApp/morphe-cli"
 rv-brand = "ReVanced Extended"
-patcher-args = "-e 'Theme' -OdarkThemeBackgroundColor=#FF0F0F0F"
+patcher-args = "-e 'Theme' -OdarkThemeColor=#FF0F0F0F"
 build-mode = "both"
 arch = "arm64-v8a"
 apkmirror-dlurl = "https://www.apkmirror.com/apk/google-inc/youtube"
@@ -30,8 +30,8 @@ archive-dlurl = "https://archive.org/download/jhc-apks/apks/com.google.android.y
 
 [YouTube-Music-Extended]
 app-name = "YouTube Music"
-patches-source = "inotia00/revanced-patches"
-cli-source = "inotia00/revanced-cli"
+patches-source = "anddea/revanced-patches"
+cli-source = "MorpheApp/morphe-cli"
 rv-brand = "ReVanced Extended"
 build-mode = "both"
 arch = "arm64-v8a"

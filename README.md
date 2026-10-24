@@ -48,4 +48,4 @@
 
 - **[j-hc](https://github.com/j-hc)** - Creator of [zygisk-detach](https://github.com/j-hc/zygisk-detach) and the [original script](https://github.com/j-hc/revanced-magisk-module) this project is based on
 - **[Morphe](https://github.com/MorpheApp)** - Developers of [Morphe patches](https://github.com/MorpheApp/morphe-patches) and [MicroG-RE](https://github.com/MorpheApp/MicroG-RE)
-- **[inotia00](https://github.com/inotia00)** - Creator of [ReVanced Extended patches](https://github.com/inotia00/revanced-patches)
+- **[inotia00](https://github.com/inotia00)** & **[anddea](https://github.com/anddea)** - Creator and current maintainer of [ReVanced Extended patches](https://github.com/anddea/revanced-patches)
