@@ -2,10 +2,11 @@
   
 | App  | APK<br/><sup>Non-Root</sup> | Module<br/><sup>Root</sup> |  
 | :--- | :-------------------------- | :------------------------- |  
-| **YouTube**<br/><sup>`21.13.164` `Extended`</sup> | [**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/56/youtube-revanced-extended-v21.13.164-arm64-v8a.apk) | [**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/56/youtube-revanced-extended-module-v21.13.164-arm64-v8a.zip) |  
-| **YouTube**<br/><sup>`21.30.216` `Morphe`</sup> | [**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/56/youtube-morphe-v21.30.216-arm64-v8a.apk) | [**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/56/youtube-morphe-module-v21.30.216-arm64-v8a.zip) |  
-| **YouTube Music**<br/><sup>`9.15.51` `Extended`</sup> | [**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/56/youtube-music-revanced-extended-v9.15.51-arm64-v8a.apk) | [**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/56/youtube-music-revanced-extended-module-v9.15.51-arm64-v8a.zip) |  
-| **Google Photos**<br/><sup>`7.92.0.977185651` `DeVanced`</sup> | [**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/56/google-photos-devanced-v7.92.0.977185651-arm64-v8a.apk) | [**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/56/google-photos-devanced-module-v7.92.0.977185651-arm64-v8a.zip) |  
+| **YouTube**<br/><sup>`21.13.164` `Extended`</sup> | [**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/57/youtube-revanced-extended-v21.13.164-arm64-v8a.apk) | [**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/57/youtube-revanced-extended-module-v21.13.164-arm64-v8a.zip) |  
+| **YouTube**<br/><sup>`21.30.216` `Morphe`</sup> | [**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/57/youtube-morphe-v21.30.216-arm64-v8a.apk) | [**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/57/youtube-morphe-module-v21.30.216-arm64-v8a.zip) |  
+| **YouTube Music**<br/><sup>`9.15.51` `Extended`</sup> | [**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/57/youtube-music-revanced-extended-v9.15.51-arm64-v8a.apk) | [**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/57/youtube-music-revanced-extended-module-v9.15.51-arm64-v8a.zip) |  
+| **YouTube Music**<br/><sup>`9.30.53` `Morphe`</sup> | [**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/57/youtube-music-morphe-v9.30.53-arm64-v8a.apk) | [**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/57/youtube-music-morphe-module-v9.30.53-arm64-v8a.zip) |  
+| **Google Photos**<br/><sup>`7.92.0.977185651` `DeVanced`</sup> | [**APK**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/57/google-photos-devanced-v7.92.0.977185651-arm64-v8a.apk) | [**Module**<br/><sup>arm64-v8a</sup>](https://github.com/avisek/revanced-apps/releases/download/57/google-photos-devanced-module-v7.92.0.977185651-arm64-v8a.zip) |  
 
 ## 📌 Notes
   
@@ -23,11 +24,11 @@ Patches: anddea/revanced-patches/patches-4.3.0.mpp
 Patches: MorpheApp/morphe-patches/patches-2.0.0.mpp  
 [Changelog](https://github.com/MorpheApp/morphe-patches/releases/tag/v2.0.0)
 
-Patches: RookieEnough/De-Vanced/patches-1.6.2.mpp  
-[Changelog](https://github.com/RookieEnough/De-Vanced/releases/tag/v1.6.2)
+Patches: RookieEnough/De-Vanced/patches-1.6.3.mpp  
+[Changelog](https://github.com/RookieEnough/De-Vanced/releases/tag/v1.6.3)
 
 CLI: MorpheApp/morphe-cli/morphe-desktop-1.20.0-all.jar    
 
 Unchanged:  
-Patches: RookieEnough/De-Vanced/patches-1.6.2.mpp  
-Patches: anddea/revanced-patches/patches-4.3.0.mpp    
+Patches: anddea/revanced-patches/patches-4.3.0.mpp  
+Patches: MorpheApp/morphe-patches/patches-2.0.0.mpp    
